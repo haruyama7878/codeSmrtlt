@@ -1,0 +1,346 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Emoji&display=swap");
+@import "tailwindcss";
+
+:root {
+  --font-game: "Baloo 2", "Nunito", system-ui, -apple-system, "Segoe UI Emoji",
+    "Apple Color Emoji", "Noto Emoji", sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-game);
+  background: #07111f;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* ---------- game text ---------- */
+.stroke-brown {
+  text-shadow: -2px -2px 0 #6b3d0b, 2px -2px 0 #6b3d0b, -2px 2px 0 #6b3d0b, 2px 2px 0 #6b3d0b,
+    0 3px 0 #6b3d0b, 0 4px 6px rgba(0, 0, 0, 0.35);
+}
+.stroke-dark {
+  text-shadow: -2px -2px 0 rgba(9, 40, 30, 0.85), 2px -2px 0 rgba(9, 40, 30, 0.85),
+    -2px 2px 0 rgba(9, 40, 30, 0.85), 2px 2px 0 rgba(9, 40, 30, 0.85), 0 3px 0 rgba(9, 40, 30, 0.85),
+    0 5px 8px rgba(0, 0, 0, 0.4);
+}
+.stroke-white {
+  text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 3px 0 #fff;
+}
+
+/* ---------- animations ---------- */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+.anim-bob {
+  animation: bob 2.4s ease-in-out infinite;
+}
+.anim-bob-slow {
+  animation: bob 3.6s ease-in-out infinite;
+}
+
+@keyframes padBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+.anim-breathe {
+  animation: padBreathe 3s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+.anim-ring {
+  animation: ringPulse 2s cubic-bezier(0.25, 0.8, 0.4, 1) infinite;
+}
+
+/* ---------- frog hop between pads ---------- */
+@keyframes frogHop {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1, 1);
+  }
+  18% {
+    transform: translate(calc(var(--dx) * 0.18), calc(var(--dy) * 0.16 - var(--hop) * 0.55))
+      rotate(6deg) scale(1.06, 0.94);
+  }
+  48% {
+    transform: translate(calc(var(--dx) * 0.48), calc(var(--dy) * 0.46 - var(--hop)))
+      rotate(-7deg) scale(0.96, 1.08);
+  }
+  74% {
+    transform: translate(calc(var(--dx) * 0.74), calc(var(--dy) * 0.8 - var(--hop) * 0.25))
+      rotate(4deg) scale(1.05, 0.95);
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) rotate(0deg) scale(1.1, 0.9);
+  }
+}
+.anim-frog-hop {
+  animation: frogHop var(--hopdur, 1s) cubic-bezier(0.32, 0.55, 0.6, 1) forwards;
+  will-change: transform;
+}
+
+@keyframes splashRing {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+.anim-splash {
+  animation: splashRing 0.75s ease-out forwards;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(0.4);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+.anim-sparkle {
+  animation: sparkle 1.7s ease-in-out infinite;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.6) translateY(30px);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.04) translateY(-4px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+.anim-pop {
+  animation: popIn 0.42s cubic-bezier(0.2, 1.3, 0.5, 1) both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.anim-fade {
+  animation: fadeIn 0.3s ease both;
+}
+
+@keyframes starPop {
+  0% {
+    transform: scale(0) rotate(-90deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.35) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+.anim-star {
+  animation: starPop 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(0.4) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.1) rotate(45deg);
+    opacity: 1;
+  }
+}
+.anim-sparkle {
+  animation: sparkle 2.6s ease-in-out infinite;
+}
+
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+  66% {
+    transform: translateY(6px) rotate(-4deg);
+  }
+}
+.anim-float {
+  animation: floatY 6s ease-in-out infinite;
+}
+
+@keyframes driftX {
+  from {
+    transform: translateX(-14%);
+  }
+  to {
+    transform: translateX(14%);
+  }
+}
+.anim-drift {
+  animation: driftX 26s ease-in-out infinite alternate;
+}
+
+@keyframes flutter {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(26px, -18px) rotate(8deg);
+  }
+  50% {
+    transform: translate(52px, 4px) rotate(-6deg);
+  }
+  75% {
+    transform: translate(20px, 22px) rotate(5deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+.anim-flutter {
+  animation: flutter 9s ease-in-out infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.anim-ripple {
+  animation: ripple 3.4s ease-out infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  60%,
+  100% {
+    transform: translateX(320%) skewX(-20deg);
+  }
+}
+.anim-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  width: 40%;
+  animation: shine 2.8s ease-in-out infinite;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(720deg);
+    opacity: 0.9;
+  }
+}
+.anim-confetti {
+  animation: confettiFall linear forwards;
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+.anim-dash {
+  animation: dashFlow 1.6s linear infinite;
+}
+
+@keyframes barFill {
+  from {
+    width: 4%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.anim-bar {
+  animation: barFill 1.5s cubic-bezier(0.3, 0.9, 0.4, 1) forwards;
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+.anim-nudge {
+  animation: nudge 1.4s ease-in-out infinite;
+}
